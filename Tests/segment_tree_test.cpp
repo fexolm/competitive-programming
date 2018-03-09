@@ -1,10 +1,9 @@
 #include <boost/test/unit_test.hpp>
 #include "../data-structures/segment_tree.hpp"
-#include <algorithm>
 BOOST_AUTO_TEST_SUITE(segment_tree)
 
 BOOST_AUTO_TEST_CASE(sum) {
-  cp::ds::SegmentTree<int> st(5);
+  ds::SegmentTree<int> st(5);
   st.set(0, 5);
   st.set(1, 8);
   st.set(2, 6);
@@ -21,8 +20,8 @@ BOOST_AUTO_TEST_CASE(sum) {
 }
 
 BOOST_AUTO_TEST_CASE(min) {
-  cp::ds::SegmentTree<int> st(5, (~(1 << 31)),
-                              [](int a, int b) -> int { return std::min<int>(a, b); });
+  ds::SegmentTree<int> st(5, (~(1 << 31)),
+                          [](int a, int b) -> int { return std::min<int>(a, b); });
   st.set(0, 5);
   st.set(1, 8);
   st.set(2, 6);
@@ -39,6 +38,22 @@ BOOST_AUTO_TEST_CASE(min) {
   BOOST_CHECK(st.get_range(0, 2)==5);
 
   BOOST_CHECK(st.get_range(3, 6)==1);
+}
+
+BOOST_AUTO_TEST_CASE(make_tree) {
+  std::vector<int> values({5, 8, 6, 3, 1, 7, 2, 6});
+
+  auto st = ds::make_segment_tree(values.begin(), values.end(), (~(1 << 31)),
+                                    [](int a, int b) -> int { return std::min<int>(a, b); });
+
+  BOOST_CHECK(st.get_range(0, 7)==1);
+
+  BOOST_CHECK(st.get_range(0, 3)==3);
+
+  BOOST_CHECK(st.get_range(0, 2)==5);
+
+  BOOST_CHECK(st.get_range(3, 6)==1);
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()
