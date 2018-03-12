@@ -13,9 +13,13 @@ include_directories(${CMAKE_SOURCE_DIR} ${Boost_INCLUDE_DIRS})
 enable_testing()
 
 add_executable(segment_tree_test segment_tree_test.cpp)
+add_executable(cartesian_tree_test CartesianTree_test.cpp)
 
 target_link_libraries(segment_tree_test cp ${Boost_LIBRARIES})
+target_link_libraries(cartesian_tree_test cp ${Boost_LIBRARIES})
+
 
 add_test(segment-tree-test segment_tree_test)
+add_test(cartesian_tree_test cartesian_tree_test)
 
 
